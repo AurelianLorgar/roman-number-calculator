@@ -1,4 +1,7 @@
-﻿//TODO: ИНТЕРФЕЙС!!!11 и сдать!!!11
+﻿// This is a personal academic project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
+
+//TODO: ИНТЕРФЕЙС!!!11 и сдать!!!11
 
 using System;
 using System.IO;
@@ -8,23 +11,19 @@ namespace romanNumberCalculator {
         static void Main(string[] args) {
 
             //TODO: переделать так, чтобы имя файла вводилось с клавиатуры
-            string pathFirst = @"C:\Users\Aurelian\Documents\Visual Studio 2015\Projects\Технология программирования\romanNumberCalculator\firstNumber.txt";
-            string pathSecond = @"C:\Users\Aurelian\Documents\Visual Studio 2015\Projects\Технология программирования\romanNumberCalculator\secondNumber.txt";
-            string pathSolution = @"C:\Users\Aurelian\Documents\Visual Studio 2015\Projects\Технология программирования\romanNumberCalculator\solution.txt";
+            string pathFirst = @"firstNumber.txt";
+            string pathSecond = @"secondNumber.txt";
+            string pathSolution = @"solution.txt";
 
             string mathSign = null;
             string solutionRomanNumberString = null;
 
             char[] firstRomanNumberChar;
             char[] secondRomanNumberChar;
-            char[] solutionArabicNumberChar;
-            char[] solutionRomanNumberChar = null;
 
             int firstArabicNumberInt = 0;
             int secondArabicNumberInt = 0;
             int solutionArabicNumberInt = 0;
-
-            //TODO: перенести в класс ArabicToRoman
 
             //TODO: выделить в метод "Что-то про считывание из файла" и добавить try-catch
             if (File.Exists(pathFirst)) {
@@ -69,7 +68,7 @@ namespace romanNumberCalculator {
                     break;
             }
 
-            solutionRomanNumberString = ArabicToRoman.transfer(3999);
+            solutionRomanNumberString = ArabicToRoman.transfer(solutionArabicNumberInt);
 
             //TODO: удалить к чертям кхорнячьим (информация для проверки работы, в самой программе не нужна)
             //Console.WriteLine(solutionArabicNumberInt);
