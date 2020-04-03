@@ -1,9 +1,4 @@
-﻿// This is a personal academic project. Dear PVS-Studio, please check it.
-// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
-
-using System.Text;
-using System;
-using System.IO;
+﻿using System.Text;
 
 namespace romanNumberCalculator {
     class ArabicToRoman {
@@ -11,6 +6,11 @@ namespace romanNumberCalculator {
         public static string transfer(int number) {
 
             StringBuilder romanNumber = new StringBuilder("");
+
+            if (number <= 0) {
+                romanNumber.Append("N");
+                return romanNumber.ToString();
+            }
 
             int romanNumM1 = 0;
             int romanNumM2 = 0;
@@ -58,17 +58,12 @@ namespace romanNumberCalculator {
         }
 
         private static string D(int number) {
-            if (number.ToString().Length >= 3) {
                 if (number == 4) {
                     return "CM";
                 } else {
                     return "D";
                 }
             }
-            else {
-                return "";
-            }
-        }
 
         private static string C(int number) {
             if (number == 4) {
@@ -117,6 +112,5 @@ namespace romanNumberCalculator {
             string[] romanNumber = { "", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" };
             return romanNumber[number];
         }
-
     }
 }

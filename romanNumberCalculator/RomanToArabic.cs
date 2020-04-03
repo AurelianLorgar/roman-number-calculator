@@ -1,12 +1,12 @@
-﻿// This is a personal academic project. Dear PVS-Studio, please check it.
-// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
-
-namespace romanNumberCalculator {
+﻿namespace romanNumberCalculator {
     class RomanToArabic {
 
         //TODO: сделать проверку на наличие в файле всякой ереси, если она есть - выводить сообщение об ошибке и прерывать выполнение
         public static int transfer(char[] arrayOfNumbers) {
-            char[] romanNumbersChar = { 'M', 'D', 'C', 'L', 'X', 'V', 'I' };
+
+            if (check(arrayOfNumbers) == -1) {
+                return -1;
+            }
 
             int arabicNumberInt = 0;
             int checkPos = 0;
@@ -97,6 +97,33 @@ namespace romanNumberCalculator {
                 }
             }
             return arabicNumberInt;
+        }
+
+        static int check(char[] arrayOfNumbersCheck) {
+            char[] romanNumbersChar = { 'M', 'D', 'C', 'L', 'X', 'V', 'I' };
+            int errTest = 0;
+            int err = 0;
+            int result;
+
+            for (int i = 0; i < arrayOfNumbersCheck.Length; i++) {
+                for (int j = 0; j < romanNumbersChar.Length; j++) {
+                    if (romanNumbersChar[j] != arrayOfNumbersCheck[i]) {
+                        errTest++;
+                    }
+                }
+                if (errTest != 7) {
+                    errTest = 0;
+                } else {
+                    err++;
+                }
+            }
+            if (err > 0) {
+                result = -1;
+            } else {
+                result = 0;
+            }
+
+            return result;
         }
     }
 }

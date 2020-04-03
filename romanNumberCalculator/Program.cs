@@ -1,21 +1,19 @@
-﻿// This is a personal academic project. Dear PVS-Studio, please check it.
-// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
-
-//TODO: ИНТЕРФЕЙС!!!11 и сдать!!!11
-
-using System;
-using System.IO;
+﻿using System;
 
 namespace romanNumberCalculator {
     class Program {
-        static void Main(string[] args) {
+        static int Main(string[] args) {
 
-            //TODO: переделать так, чтобы имя файла вводилось с клавиатуры
-            string pathFirst = @"firstNumber.txt";
-            string pathSecond = @"secondNumber.txt";
-            string pathSolution = @"solution.txt";
+           if (args.Length < 3) {
+                Console.WriteLine("Введите имена файлов, в которых записаны римские цифры, и имя файла, в который будет записан ответ");
+                Console.ReadKey();
+                return 1;
+            }
+            
+            string fileFirst = args[0];
+            string fileSecond = args[1];
+            string fileSolution = args[2];
 
-            string mathSign = null;
             string solutionRomanNumberString = null;
 
             char[] firstRomanNumberChar;
@@ -23,57 +21,69 @@ namespace romanNumberCalculator {
 
             int firstArabicNumberInt = 0;
             int secondArabicNumberInt = 0;
-            int solutionArabicNumberInt = 0;
 
-            //TODO: выделить в метод "Что-то про считывание из файла" и добавить try-catch
-            if (File.Exists(pathFirst)) {
-                firstRomanNumberChar = File.ReadAllText(pathFirst).ToCharArray();
-            } else {
-                Console.WriteLine("Файл firstNumber.txt не существует");
+            //firstRomanNumberChar = FileOperations.readFromFile(fileFirst).ToCharArray();
+            //secondRomanNumberChar = FileOperations.readFromFile(fileSecond).ToCharArray();
+
+            //Console.WriteLine(firstRomanNumberChar);
+
+            if (FileOperations.readFromFile(fileFirst).Equals("-")) {
                 Console.ReadKey();
-                return;
+                return -1;
             }
 
-            //TODO: удалить к чертям кхорнячьим, потому что это будет отдельным методом
-            if (File.Exists(pathSecond)) {
-                secondRomanNumberChar = File.ReadAllText(pathSecond).ToCharArray();
-            } else {
-                Console.WriteLine("Файл secondNumber.txt не существует");
+            firstRomanNumberChar = FileOperations.readFromFile(fileFirst).ToCharArray();
+
+            if (FileOperations.readFromFile(fileSecond).Equals("-")) {
                 Console.ReadKey();
-                return;
+                return -1;
             }
+
+            secondRomanNumberChar = FileOperations.readFromFile(fileSecond).ToCharArray();
 
             firstArabicNumberInt = RomanToArabic.transfer(firstRomanNumberChar);
             secondArabicNumberInt = RomanToArabic.transfer(secondRomanNumberChar);
 
-            //TODO: добавить ввод имени файлов в консоль, из которых берется решение
+            if (firstArabicNumberInt == -1) {
+                Console.WriteLine("Проверьте правильность ввода римских чисел в файле " + fileFirst + " или выберите другой файл.");
+                Console.ReadKey();
+                return -1;
+            } else if (secondArabicNumberInt == -1) {
+                Console.WriteLine("Проверьте правильность ввода римских чисел в файле " + fileSecond + " или выберите другой файл.");
+                Console.ReadKey();
+                return -1;
+            }
+            
+            solutionRomanNumberString = mathOperations(firstArabicNumberInt, secondArabicNumberInt);
+
+            FileOperations.writeToFile(fileSolution, solutionRomanNumberString);
+
+            Console.Write(solutionRomanNumberString);
+            Console.ReadKey();
+
+            return 0;
+        }
+
+        static string mathOperations(int firstNumber, int secondNumber) {
             Console.Write("Введите знак математического действия: ");
+            string mathSign = null;
+            string solution = null;
+
             mathSign = Console.ReadLine();
 
             switch (mathSign) {
                 case ("+"):
-                    solutionArabicNumberInt = firstArabicNumberInt + secondArabicNumberInt;
-                    break;
+                    return solution = ArabicToRoman.transfer(firstNumber + secondNumber);
                 case ("-"):
-                    solutionArabicNumberInt = firstArabicNumberInt - secondArabicNumberInt;
-                    break;
+                    return solution = ArabicToRoman.transfer(firstNumber - secondNumber);
                 case ("*"):
-                    solutionArabicNumberInt = firstArabicNumberInt * secondArabicNumberInt;
-                    break;
+                    return solution = ArabicToRoman.transfer(firstNumber * secondNumber);
                 case ("/"):
-                    solutionArabicNumberInt = firstArabicNumberInt / secondArabicNumberInt;
-                    break;
+                    return solution = ArabicToRoman.transfer(firstNumber / secondNumber);
                 default:
                     Console.WriteLine("Вы ввели неверный знак");
-                    break;
+                    return "";
             }
-
-            solutionRomanNumberString = ArabicToRoman.transfer(solutionArabicNumberInt);
-
-            //TODO: удалить к чертям кхорнячьим (информация для проверки работы, в самой программе не нужна)
-            //Console.WriteLine(solutionArabicNumberInt);
-            Console.WriteLine(solutionRomanNumberString);
-            Console.ReadKey();
         }
     }
 }
