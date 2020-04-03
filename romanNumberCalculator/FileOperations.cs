@@ -1,15 +1,21 @@
-﻿using System;
+﻿// This is a personal academic project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
+
+using System;
 using System.IO;
+using System.Text;
 
 namespace romanNumberCalculator {
     class FileOperations {
 
         public static string readFromFile(string file) {
+            StringBuilder numberStringBuilder = new StringBuilder("");
             try {
                 using (StreamReader sr = new StreamReader(file)) {
+                    
                     string numberString;
                     while ((numberString = sr.ReadLine()) != null) {
-                        return numberString.ToUpper();
+                        numberStringBuilder.Append(numberString.ToUpper());
                     }
                 }
             }
@@ -18,7 +24,7 @@ namespace romanNumberCalculator {
                 Console.WriteLine(e.Message);
                 return "-";
             }
-            return "";
+            return numberStringBuilder.ToString();
         }
 
         public static void writeToFile(string file, string number) {
