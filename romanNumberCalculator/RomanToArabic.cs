@@ -1,10 +1,9 @@
 ﻿namespace romanNumberCalculator {
     class RomanToArabic {
 
-        //TODO: сделать проверку на наличие в файле всякой ереси, если она есть - выводить сообщение об ошибке и прерывать выполнение
         public static int transfer(char[] arrayOfNumbers) {
 
-            if (check(arrayOfNumbers) == -1) {
+            if (Check.checkTransfer(arrayOfNumbers) == false) {
                 return -1;
             }
 
@@ -97,33 +96,6 @@
                 }
             }
             return arabicNumberInt;
-        }
-
-        static int check(char[] arrayOfNumbersCheck) {
-            char[] romanNumbersChar = { 'M', 'D', 'C', 'L', 'X', 'V', 'I' };
-            int errTest = 0;
-            int err = 0;
-            int result;
-
-            for (int i = 0; i < arrayOfNumbersCheck.Length; i++) {
-                for (int j = 0; j < romanNumbersChar.Length; j++) {
-                    if (romanNumbersChar[j] != arrayOfNumbersCheck[i]) {
-                        errTest++;
-                    }
-                }
-                if (errTest != 7) {
-                    errTest = 0;
-                } else {
-                    err++;
-                }
-            }
-            if (err > 0) {
-                result = -1;
-            } else {
-                result = 0;
-            }
-
-            return result;
         }
     }
 }

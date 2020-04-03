@@ -44,6 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArabicToRoman.cs" />
+    <Compile Include="Calculations.cs" />
+    <Compile Include="Check.cs" />
     <Compile Include="FileOperations.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
