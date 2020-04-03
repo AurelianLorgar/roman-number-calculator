@@ -1,7 +1,0 @@
-C:\Users\Aurelian\Documents\Visual Studio 2015\Projects\Технология программирования\romanNumberCalculator\romanNumberCalculator\romanNumberCalculator\bin\Debug\romanNumberCalculator.exe.config
-C:\Users\Aurelian\Documents\Visual Studio 2015\Projects\Технология программирования\romanNumberCalculator\romanNumberCalculator\bin\Debug\romanNumberCalculator.exe.config
-C:\Users\Aurelian\Documents\Visual Studio 2015\Projects\Технология программирования\romanNumberCalculator\romanNumberCalculator\bin\Debug\romanNumberCalculator.exe
-C:\Users\Aurelian\Documents\Visual Studio 2015\Projects\Технология программирования\romanNumberCalculator\romanNumberCalculator\bin\Debug\romanNumberCalculator.pdb
-C:\Users\Aurelian\Documents\Visual Studio 2015\Projects\Технология программирования\romanNumberCalculator\romanNumberCalculator\obj\Debug\romanNumberCalculator.csprojResolveAssemblyReference.cache
-C:\Users\Aurelian\Documents\Visual Studio 2015\Projects\Технология программирования\romanNumberCalculator\romanNumberCalculator\obj\Debug\romanNumberCalculator.exe
-C:\Users\Aurelian\Documents\Visual Studio 2015\Projects\Технология программирования\romanNumberCalculator\romanNumberCalculator\obj\Debug\romanNumberCalculator.pdb
