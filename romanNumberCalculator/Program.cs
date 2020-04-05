@@ -45,6 +45,11 @@ namespace romanNumberCalculator {
  
             solutionRomanNumberString = Calculations.mathOperations(firstArabicNumberInt, secondArabicNumberInt);
 
+            if (solutionRomanNumberString == "") {
+                Console.ReadKey();
+                return -1;
+            }
+
             FileOperations.writeToFile(fileSolution, solutionRomanNumberString);
             Console.Write("Ответ: " + solutionRomanNumberString);
             Console.ReadKey();

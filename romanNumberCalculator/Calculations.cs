@@ -21,7 +21,12 @@ namespace romanNumberCalculator {
                 case ("*"):
                     return solution = ArabicToRoman.transfer(firstNumber * secondNumber);
                 case ("/"):
-                    return solution = ArabicToRoman.transfer(firstNumber / secondNumber);
+                    try {
+                        return solution = ArabicToRoman.transfer(firstNumber / secondNumber);
+                    } catch (Exception e) {
+                        Console.WriteLine(e.Message);
+                        return "";
+                    }
                 default:
                     Console.WriteLine("Вы ввели неверный знак");
                     return "";

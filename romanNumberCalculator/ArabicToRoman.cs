@@ -63,9 +63,10 @@ namespace romanNumberCalculator {
         private static string D(int number) {
                 if (number == 4) {
                     return "CM";
-                } else {
+                } else if (number != 0) {
                     return "D";
                 }
+            return "";
             }
 
         private static string C(int number) {

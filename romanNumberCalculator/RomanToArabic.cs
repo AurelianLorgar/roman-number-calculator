@@ -16,6 +16,10 @@ namespace romanNumberCalculator {
             for (int pos = 0; pos < arrayOfNumbers.Length; pos++) {
                 checkPos = pos + 1;
 
+                if (arrayOfNumbers[pos].Equals(null) || arrayOfNumbers.Equals(' ')) {
+                    arabicNumberInt += 0;
+                }
+
                 if (arrayOfNumbers[pos].Equals('M')) {
                         arabicNumberInt += 1000;
                 }
