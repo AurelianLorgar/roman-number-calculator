@@ -2,56 +2,93 @@
 // PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
 
 using System;
+using RomanCalculator;
+using System.Data;
 
 namespace romanNumberCalculator {
     class Program {
+
         static int Main(string[] args) {
 
-           if (args.Length < 3) {
-                Console.WriteLine("Введите имена файлов, в которых записаны римские цифры, и имя файла, в который будет записан ответ");
+            RomanToArabic romanToArabic = new RomanToArabic();
+            ArabicToRoman arabicToRoman = new ArabicToRoman();
+            FileOperations fileOperations = new FileOperations();
+
+            char[] numbers = { 'M', 'D', 'C', 'L', 'X', 'V', 'I' };
+            char[] signs = { '+', '-', '*', '/' };
+
+            if (args.Length < 2) {
+                Console.WriteLine("Введите имя файла, в котором записано выражение, над которым необходимо провести математическую операцию," +
+                    " и имя файла, в который будет записан ответ");
                 Console.ReadKey();
                 return 1;
             }
-            
-            string fileFirst = args[0];
-            string fileSecond = args[1];
-            string fileSolution = args[2];
 
-            string solutionRomanNumberString = null;
+            string fileNumbers = args[0];
+            string fileSolution = args[1];
+            string solutionRomanNumberString;
+            string romanNumbersString = fileOperations.ReadFromFile(fileNumbers).ToUpper();
+            string transferString = "";
+            string tempString = "";
+            int solutionInt = 0;
+            int err = 0;
 
-            string firstRomanNumberString;
-            string secondRomanNumberString;
-
-            int firstArabicNumberInt = 0;
-            int secondArabicNumberInt = 0;
-
-            firstRomanNumberString = FileOperations.readFromFile(fileFirst);
-            secondRomanNumberString = FileOperations.readFromFile(fileSecond);
-
-            if ((Check.checkRead(firstRomanNumberString) == false) 
-                || (Check.checkRead(secondRomanNumberString) == false)) {
+            if (Check.CheckRead(romanNumbersString).Equals(false)) {
                 Console.ReadKey();
                 return -1;
             }
 
-            firstArabicNumberInt = RomanToArabic.transfer(firstRomanNumberString.ToCharArray());
-            secondArabicNumberInt = RomanToArabic.transfer(secondRomanNumberString.ToCharArray());
+            for (int i = 0; i < romanNumbersString.Length; i++) {
+                for (int j = 0; j < numbers.Length; j++) {
+                    if (!romanNumbersString[i].Equals(numbers[j])) {
+                        err++;
+                    }
+                }
+                for (int j = 0; j < signs.Length; j++) {
+                    if (romanNumbersString[i].Equals(signs[j])) {
+                        err++;
+                    }
+                }
 
-            if ((firstArabicNumberInt == -1) || (secondArabicNumberInt == -1)) {
-                Console.WriteLine("Проверьте правильность ввода римских чисел или выберите другой файл.");
+                if (err == 11) {
+                    Console.WriteLine("Обнаружен недопустимый символ");
+                    Console.ReadKey();
+                    return -1;
+                }
+            }
+
+            for (int i = 0; i < romanNumbersString.Length; i++) {
+
+                for (int j = 0; j < numbers.Length; j++)
+                    if (romanNumbersString[i].Equals(numbers[j])) {
+                        tempString += romanNumbersString[i];
+                        transferString += romanToArabic.Transfer(tempString.ToCharArray()).ToString();
+                        break;
+                    }
+                for (int j = 0; j < signs.Length; j++) {
+                    if (romanNumbersString[i].Equals(signs[j])) {
+                        transferString += romanNumbersString[i];
+                        tempString = "";
+                        break;
+                    }
+                }
+            }
+
+            try {
+                var solution = new DataTable().Compute(transferString, null);
+                double solutionDouble = Convert.ToDouble(solution.ToString());
+                solutionInt = Convert.ToInt32(Math.Round(solutionDouble, 0));
+                solutionRomanNumberString = arabicToRoman.Transfer(solutionInt);
+            }
+            catch (Exception e) {
+                Console.WriteLine("Ошибка вычисления");
+                Console.WriteLine(e.Message);
                 Console.ReadKey();
                 return -1;
             }
- 
-            solutionRomanNumberString = Calculations.mathOperations(firstArabicNumberInt, secondArabicNumberInt);
 
-            if (solutionRomanNumberString == "") {
-                Console.ReadKey();
-                return -1;
-            }
-
-            FileOperations.writeToFile(fileSolution, solutionRomanNumberString);
-            Console.Write("Ответ: " + solutionRomanNumberString);
+            fileOperations.WriteToFile(fileSolution, solutionRomanNumberString);
+            Console.Write(romanNumbersString + " = " + solutionRomanNumberString);
             Console.ReadKey();
             return 0;
         }

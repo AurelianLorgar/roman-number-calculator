@@ -8,7 +8,7 @@ using System.Text;
 namespace romanNumberCalculator {
     class FileOperations {
 
-        public static string readFromFile(string file) {
+        public string ReadFromFile(string file) {
             StringBuilder numberStringBuilder = new StringBuilder("");
             try {
                 using (StreamReader sr = new StreamReader(file)) {
@@ -20,20 +20,20 @@ namespace romanNumberCalculator {
                 }
             }
             catch (Exception e) {
-                Console.Write("Файл невозможно прочитать: ");
+                Console.WriteLine("Файл невозможно прочитать: ");
                 Console.WriteLine(e.Message);
                 return "-";
             }
             return numberStringBuilder.ToString();
         }
 
-        public static void writeToFile(string file, string number) {
+        public void WriteToFile(string file, string number) {
             try {
                 using (StreamWriter sw = new StreamWriter(file, false, System.Text.Encoding.Default)) {
                     sw.WriteLine(number);
                 }
             } catch (Exception e) {
-                Console.Write("Невозможно записать в файл: ");
+                Console.WriteLine("Невозможно записать в файл: ");
                 Console.WriteLine(e.Message);
             }
         }
