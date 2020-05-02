@@ -15,7 +15,7 @@ namespace romanNumberCalculator {
             FileOperations fileOperations = new FileOperations();
 
             char[] numbers = { 'M', 'D', 'C', 'L', 'X', 'V', 'I' };
-            char[] signs = { '+', '-', '*', '/' };
+            string[] signs = { "+", "-", "*", "/" };
 
             if (args.Length < 2) {
                 Console.WriteLine("Введите имя файла, в котором записано выражение, над которым необходимо провести математическую операцию," +
@@ -29,9 +29,11 @@ namespace romanNumberCalculator {
             string solutionRomanNumberString;
             string romanNumbersString = fileOperations.ReadFromFile(fileNumbers).ToUpper();
             string transferString = "";
-            string tempString = "";
+            string[] numbersArray = { "" };
             int solutionInt = 0;
             int err = 0;
+            char delimiter = '@';
+            bool check;
 
             if (Check.CheckRead(romanNumbersString).Equals(false)) {
                 Console.ReadKey();
@@ -57,22 +59,32 @@ namespace romanNumberCalculator {
                 }
             }
 
-            for (int i = 0; i < romanNumbersString.Length; i++) {
+            for (int i = 0; i < signs.Length; i++) {
+                romanNumbersString = romanNumbersString.Replace(signs[i], delimiter + signs[i] + delimiter);
+            }
 
-                for (int j = 0; j < numbers.Length; j++)
-                    if (romanNumbersString[i].Equals(numbers[j])) {
-                        tempString += romanNumbersString[i];
-                        transferString += romanToArabic.Transfer(tempString.ToCharArray()).ToString();
-                        break;
-                    }
-                for (int j = 0; j < signs.Length; j++) {
-                    if (romanNumbersString[i].Equals(signs[j])) {
-                        transferString += romanNumbersString[i];
-                        tempString = "";
-                        break;
-                    }
+            for (int i = 0; i < romanNumbersString.Length; i++) {
+                if (romanNumbersString[i].Equals(delimiter)) {
+                    numbersArray = romanNumbersString.Split(delimiter);
                 }
             }
+
+            string[] numbersArabicArray = new string[numbersArray.Length];
+
+            for (int i = 0; i < numbersArray.Length; i++) {
+                check = true;
+                for (int j = 0; j < signs.Length; j++) {
+                    if (numbersArray[i].Equals(signs[j])) {
+                        numbersArabicArray[i] += numbersArray[i];
+                        check = false;
+                    }
+                }
+                if (check) {
+                    numbersArabicArray[i] += romanToArabic.Transfer(numbersArray[i].ToCharArray()).ToString();
+                }
+            }
+
+            transferString = string.Join(null, numbersArabicArray);
 
             try {
                 var solution = new DataTable().Compute(transferString, null);
@@ -88,7 +100,7 @@ namespace romanNumberCalculator {
             }
 
             fileOperations.WriteToFile(fileSolution, solutionRomanNumberString);
-            Console.Write(romanNumbersString + " = " + solutionRomanNumberString);
+            Console.Write("Ответ: " +  solutionRomanNumberString);
             Console.ReadKey();
             return 0;
         }
